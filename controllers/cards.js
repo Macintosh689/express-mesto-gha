@@ -30,9 +30,14 @@ module.exports.deleteCardById = (req, res) => {
       if (!card) {
         return res.status(404).send({ message: 'карточка не найдена.' });
       }
-      return res.send(card);
+      return card.deleteOne().then(() => res.send({ message: 'Карточка удалена' }));
     })
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        return res.status(400).send({ message: 'переданы некорректные данные карточки' });
+      }
+      return res.status(500).send({ message: 'Произошла ошибка на сервере' });
+    });
 };
 
 module.exports.likeCard = (req, res) => {
@@ -46,7 +51,7 @@ module.exports.likeCard = (req, res) => {
       return res.send(card);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         return res.status(400).send({ message: 'переданы некорректные данные карточки' });
       }
       return res.status(500).send({ message: 'Произошла ошибка на сервере' });
@@ -64,7 +69,7 @@ module.exports.dislikeCard = (req, res) => {
       return res.send(card);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'CastError') {
         return res.status(400).send({ message: 'переданы некорректные данные карточки' });
       }
       return res.status(500).send({ message: 'Произошла ошибка на сервере' });

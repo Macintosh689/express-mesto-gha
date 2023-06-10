@@ -16,6 +16,8 @@ app.use((req, res, next) => {
 
   next();
 });
+app.use((req, res) => res.status(404).send({ message: 'карточка не найдена.' }));
+
 app.use(router);
 app.listen(PORT, () => {
   console.log('Сервер запущен');
