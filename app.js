@@ -9,13 +9,11 @@ const app = express();
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use((req, res) => res.status(404).send({ message: 'карточка не найдена.' }));
 
 app.use((req, res, next) => {
   req.user = {
     _id: '648442eb98399c59f62db74b'
   };
-
   next();
 });
 
