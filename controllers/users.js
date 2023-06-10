@@ -34,7 +34,12 @@ module.exports.getUserById = (req, res) => {
       }
       return res.send(user);
     })
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: 'переданы некорректные данные пользователя' });
+      }
+      return res.status(500).send({ message: 'Произошла ошибка на сервере' });
+    });
 };
 
 module.exports.updateProfile = (req, res) => {
