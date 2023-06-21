@@ -102,7 +102,7 @@ module.exports.login = (req, res, next) => {
   } = req.body;
   User.findOne({ email }).select('+password').then((user) => {
     if (!user) {
-      return new Unauthorized('пользователь не найден.');
+      throw new Unauthorized('пользователь не найден.');
     }
     return bcrypt.compare(password, user.password).then((match) => {
       if (!match) {
