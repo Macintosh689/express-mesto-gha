@@ -23,14 +23,14 @@ module.exports.createUser = (req, res, next) => {
       }))
       .catch((err) => {
         if (err.code === 11000) {
-          return new Conflict('Пользователь с таким email уже существует');
+          next(new Conflict('Пользователь с таким email уже существует'));
+        } else if (err.name === 'ValidationError') {
+          next(new BadRequest('переданы некорректные данные пользователя'));
+        } else {
+          next(err);
         }
-        if (err.name === 'ValidationError') {
-          return new BadRequest('переданы некорректные данные пользователя');
-        }
-        return next(err);
       });
-  });
+  }).catch(next);
 };
 
 module.exports.getUsers = (req, res, next) => {
