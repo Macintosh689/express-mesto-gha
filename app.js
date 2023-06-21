@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { celebrate, Joi } = require('celebrate');
+const { celebrate, Joi, errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const router = require('./routes');
 const { login, createUser } = require('./controllers/users');
@@ -22,15 +22,16 @@ app.post('/signin', celebrate({
 }), login);
 app.post('/signup', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
-    avatar: Joi.string().required().regex(REGEX),
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().regex(REGEX),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   })
 }), createUser);
 app.use(auth);
 app.use(router);
+app.use(errors());
 app.use(defaultError);
 app.listen(PORT, () => {
   console.log('Сервер запущен');
