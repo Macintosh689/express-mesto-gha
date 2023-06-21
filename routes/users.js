@@ -1,16 +1,30 @@
 const userRouter = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
+
 const {
-  getUsers, getUserById, createUser, updateProfile, updateAvatar
+  getUsers, getUserById, updateProfile, updateAvatar, getCurrentUser
 } = require('../controllers/users');
+const { REGEX } = require('../middlewares/validation');
 
 userRouter.get('/', getUsers);
 
-userRouter.get('/:userId', getUserById);
-
-userRouter.post('/', createUser);
-
-userRouter.patch('/me', updateProfile);
-userRouter.patch('/me/avatar', updateAvatar);
+userRouter.get('/:userId', celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().required(),
+  })
+}), getUserById);
+userRouter.get('/me', getCurrentUser);
+userRouter.patch('/me', celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2).max(30),
+  })
+}), updateProfile);
+userRouter.patch('/me/avatar', celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required().regex(REGEX),
+  })
+}), updateAvatar);
 
 userRouter.use('*', (req, res) => {
   res.status(404).send({ message: 'Страница не найдена' });
