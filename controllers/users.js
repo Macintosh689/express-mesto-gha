@@ -106,7 +106,7 @@ module.exports.login = (req, res, next) => {
     }
     return bcrypt.compare(password, user.password).then((match) => {
       if (!match) {
-        return new Unauthorized('пользователь не найден.');
+        return next(new Unauthorized('пользователь не найден.'));
       }
       const token = jwt.sign(
         { _id: user._id },
