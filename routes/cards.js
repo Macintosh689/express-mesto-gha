@@ -4,7 +4,7 @@ const { celebrate, Joi } = require('celebrate');
 const {
   getCards, deleteCardById, createCard, likeCard, dislikeCard
 } = require('../controllers/cards');
-const { REGEX } = require('../middlewares/validation');
+const { urlValidation } = require('../middlewares/validation');
 
 cardRouter.get('/', getCards);
 
@@ -17,7 +17,7 @@ cardRouter.delete('/:cardId', celebrate({
 cardRouter.post('/', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().regex(REGEX),
+    link: Joi.string().required().regex(urlValidation),
   })
 }), createCard);
 
