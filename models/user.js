@@ -1,7 +1,7 @@
 // models/user.js
 const mongoose = require('mongoose');
 const { default: isEmail } = require('validator/lib/isEmail');
-const { REGEX } = require('../middlewares/validation');
+const { urlValidation } = require('../middlewares/validation');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     validate: {
-      validator: (v) => REGEX.test(v),
+      validator: (v) => urlValidation.test(v),
       message: 'Некорректный Url',
     },
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     select: false,
-    minLength: 8,
   },
 });
 
