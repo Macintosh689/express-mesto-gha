@@ -1,8 +1,10 @@
 // Массив доменов, с которых разрешены кросс-доменные запросы
 const allowedCors = [
-  'https://praktikum.tk',
-  'http://praktikum.tk',
-  'localhost:3000'
+  'localhost:3000',
+  'http://localhost:3000',
+  'https://localhost:3000',
+  'http://macintosh689.nomoredomains.work',
+  'https://macintosh689.nomoredomains.work'
 ];
 
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
