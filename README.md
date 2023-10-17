@@ -43,12 +43,15 @@
 ## Запуск проекта
 
 1. Клонировать репозиторий
-
-    `git clone https://github.com/Macintosh689/express-mesto-gha`
-
+```
+    git clone https://github.com/Macintosh689/express-mesto-gha
+```
 2. Установить зависимости
-
-    `npm install`
-
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+```
+    npm install
+```
+3. Запустить проект  
+```
+  npm run start — запускает сервер
+```   
+    npm run dev — запускает сервер с hot-reload
