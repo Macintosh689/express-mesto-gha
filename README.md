@@ -14,6 +14,7 @@
 
 ## Описание технологий,использованных в этом проекте:
 - JavaScript
+- React JS
 - Popup
 - Grid
 - Flex
